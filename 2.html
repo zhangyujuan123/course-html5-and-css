@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" name="product" placeholder="请输入查找的商品" id="pro" style="height:30px;"/>
+    <input type="button" value="搜索" id="sea" style="height:33px; width:120px; color:gray;">
+    <p style="margin-top:0px;">最近搜索</p>
+    <div style="width:350px;"><div></div><p style="float:right; color:white;background:lightgray;font-size:25px; height:28px;">×</p></div>
+</body>
+<script type="text/javascript">
+    var t=document.getElementById("pro");
+    var s=document.getElementById("sea");
+    var d=document.getElementsByTagName("div")[1];
+    var p=document.getElementsByTagName("p")[1];
+    window.onload=function(){
+        for(var i=0;i<localStorage.length;i++){
+                var a=document.createElement("span");
+                var key = localStorage.key(i);
+                var value = localStorage.getItem(key);
+                a.innerHTML=value;
+                a.style.background="lightgray";
+                a.style.marginBottom='50px';
+                a.style.lineHeight='20px';
+                d.appendChild(a);
+                d.innerHTML+='&nbsp;';
+        }
+    }
+    function time2(){
+        var time1=new Date();
+        return time1.getFullYear()+"/"+time1.getMonth()+"/"+time1.getDay()+"/"+time1.getHours()+":"+time1.getMinutes()+":"+time1.getSeconds();
+    }
+    s.onclick=function(){
+        var data = t.value;
+        var time = time2();
+        if(window.localStorage){
+            if(data!=""){
+                localStorage.setItem(time, data);
+                var an=document.createElement("span");
+                an.innerHTML=data;
+                an.style.background="lightgray";
+                an.style.marginBottom='20px';
+                d.appendChild(an);
+                d.innerHTML+='&nbsp;';
+            }
+            else{
+                alert("输入的内容不能为空，请重新输入!");
+            }
+        }
+        else{
+            alert("浏览器不支持");
+        }
+    }
+    p.onclick=function(){
+        localStorage.clear();
+        d.innerHTML="";
+    }
+</script>
+</html>
