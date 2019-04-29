@@ -47,7 +47,7 @@
                 var x=e.clientX-canvas.offsetLeft;
                 var y=e.clientY-canvas.offsetTop;
                 context.moveTo(x,y);
-                context.arc(x,y,10,0,2*Math.PI);     
+                context.arc(x,y,15,0,2*Math.PI);
                 context.fill();
                 var mydata = context.getImageData(0,0,canvas.width,canvas.height);
 				var data = mydata.data;
@@ -62,6 +62,9 @@
 					}
                 }
 			}
+        }
+	canvas.onmouseup=function(){
+            canvas.onmousemove='';
         }
     </script>
 </body>
