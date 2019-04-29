@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    *{
+        padding: 0;
+        margin: 0;
+    }
+    #div {
+        width:300px;
+        height:95px;
+        background-color: white;
+        text-align: center;
+        padding-top:55px;
+        color: black;
+        font-size: 20px;
+    }
+    canvas{
+        position:relative;
+        top:-150px;
+    }
+</style>
+<body>
+    <div id="div"></div>
+    <canvas id="canvas"></canvas>
+
+    <script>
+        var div=document.getElementById("div");
+        var canvas = document.getElementById("canvas");
+        var context = canvas.getContext("2d");
+        var award=['一等奖','二等奖','二等奖','三等奖','三等奖','三等奖','谢谢惠顾','谢谢惠顾','谢谢惠顾','谢谢惠顾'];
+        var a=Math.floor((Math.random()*(award.length-1)));
+        div.innerHTML=award[a]; 
+
+        context.fillStyle="#ccc";
+        context.fillRect(0,0,300,150);
+        context.globalCompositeOperation ='destination-out';  
+        canvas.onmousedown=function(e){
+            canvas.onmousemove=function(e){
+                var e=e||window.event;
+                var x=e.clientX-canvas.offsetLeft;
+                var y=e.clientY-canvas.offsetTop;
+                context.moveTo(x,y);
+                context.arc(x,y,10,0,2*Math.PI);     
+                context.fill();
+                var mydata = context.getImageData(0,0,canvas.width,canvas.height);
+				var data = mydata.data;
+				var count = 0;
+				for(var i=0;i<data.length;i+=4){
+					var a = data[i+3];
+					if(a==0){
+						count++;
+					}
+					if(count>=data.length/4*0.85){
+						context.clearRect(0,0,canvas.width,canvas.height);
+					}
+                }
+			}
+        }
+    </script>
+</body>
+</html>
